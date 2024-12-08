@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/executa
+    workflow_dispatch:
 
 jobs:
   create-developer-branch:
