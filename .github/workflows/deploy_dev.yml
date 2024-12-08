@@ -1,0 +1,38 @@
+name: Create Developer Branch
+
+on:
+  push:
+    branches:
+      - feature/executa
+
+jobs:
+  create-developer-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configurar o Git para criar e mover a branch
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Verificar se a branch 'developer' já existe
+      - name: Check if 'developer' branch exists
+        run: |
+          if git show-ref --verify --quiet refs/heads/developer; then
+            echo "Branch 'developer' already exists, updating..."
+          else
+            echo "Branch 'developer' does not exist, creating..."
+            git branch developer
+          fi
+
+      # Atualizar ou criar a branch 'developer'
+      - name: Push changes to 'developer'
+        run: |
+          git checkout developer
+          git merge --no-ff feature/executa -m "Merge from feature/executa"
+          git push origin developer
