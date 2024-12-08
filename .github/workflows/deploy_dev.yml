@@ -1,10 +1,6 @@
 name: Create Developer Branch
 
-on:
-  push:
-    branches:
-      - feature/executa
-    workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   create-developer-branch:
